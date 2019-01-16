@@ -1,17 +1,41 @@
 var express = require('express');
 var app = express();
+var db = require('./database');
 
-
-// This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
     res.send('Hello GET');
+    // db.select();
 })
 
-// This responds a POST request for the homepage
 app.post('/api/add_device', function (req, res) {
     console.log("Got a POST request for /api/add_device");
-    res.send("Hello POST");
+    ans = db.addDevice(req.body);
+    res.send(ans);
+})
+
+app.post('/login', function (req, res) {
+    console.log("Got a POST request for /login");
+    ans = db.login(req.body);
+    res.send(ans);
+})
+
+app.post('/register', function (req, res) {
+    console.log("Got a POST request for /register");
+    ans = db.addUser(req.body);
+    res.send(ans);
+})
+
+app.delete('/delete_user', function (req, res) {
+    console.log("Got a DELETE request for /delete_user");
+    ans = db.deleteUser(req.body);
+    res.send(ans);
+})
+
+app.patch('/api/update_device', function (req, res) {
+    console.log("Got a PATCH request for /api/update_device");
+    ans = db.updateDeviceState(req.body);
+    res.send(ans);
 })
 
 
