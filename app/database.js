@@ -6,6 +6,8 @@ var con = mysql.createConnection({
     database: "devices"
 });
 
+/* Returns an array of all the devices of the type 'type' 
+ for the user with id = 'uid' */
 var getDevices = function (type, uid) {
     devices = [];
     con.connect(function (err) {
@@ -34,6 +36,8 @@ var getDevices = function (type, uid) {
     });
 }
 
+/* Checks if username exists, returns as an object an array of all 
+owned devices and a flag for success / error */
 var login = function (data) {
     console.log("Login called");
     var sql_query = "SELECT * FROM USER WHERE name=" + con.escape(data.name);
@@ -51,6 +55,8 @@ var login = function (data) {
     con.end();
 }
 
+/* Deletes an user with the id = 'data.id' and returns
+an object with a flag for success / error */
 var deleteUser = function (data) {
     console.log("Delete user called");
     con.connect(function (err) {
@@ -63,6 +69,8 @@ var deleteUser = function (data) {
                     answer: "User not found",
                 }
             } else {
+                deleteUserData(data.id, "light");
+                deleteUserData(data.id, "switch");
                 return {
                     answer: "ok"
                 }
@@ -71,7 +79,19 @@ var deleteUser = function (data) {
         con.end();
     });
 }
+/* Deletes all the devices of type = 'type' owned by the user with id = 'id' */
+var deleteUserData = function (id, type) {
+    con.connect(function (err) {
+        if (err) throw err;
+        var sql = "DELETE FROM " + con.escape(type) + "WHERE uid=" + con.escape(data.id);
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+        });
+        con.end();
+    });
+}
 
+/* Adds a new user, returns an object with the id of the user and a flag*/
 var addUser = function (data) {
     console.log("Add user called");
     con.connect(function (err) {
@@ -92,6 +112,8 @@ var addUser = function (data) {
     });
 }
 
+/* Updates the device power / brightness with the id = 'data.id' 
+returns an object with a flag for error / success*/
 var updateDeviceState = function (data) {
     console.log("Update device called");
     con.connect(function (err) {
@@ -122,6 +144,8 @@ var updateDeviceState = function (data) {
     });
 }
 
+/* Adds a new devices of type = 'data.type' for the user with id= 'data.uid' 
+returns an object with the id of the new device and a flag for success / error */
 var addDevice = function (data) {
     console.log("Add device called");
     con.connect(function (err) {
@@ -144,12 +168,12 @@ var addDevice = function (data) {
     });
 }
 
+/* Deletes a device  with the id = 'data.id' and the type = 'data.type', returns a flag*/
 var deleteDevice = function (data) {
     console.log("Delete device called");
     con.connect(function (err) {
         if (err) throw err;
         var sql_query = "DELETE FROM " + con.escape(data.type) + " WHERE id=" + con.escape(data.id);
-
         con.query(sql, function (err, result) {
             if (err) throw err;
             var ans = {};
@@ -157,7 +181,6 @@ var deleteDevice = function (data) {
                 ans.answer = "Error. Not Found.";
             } else {
                 ans.answer = "ok";
-                ans.id = result.insertId;
             }
             // console.log(result);
             return ans;
@@ -166,19 +189,20 @@ var deleteDevice = function (data) {
     });
 }
 
-var select = function () {
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql_query = "SELECT * FROM light";
-        con.query(sql_query, function (err, result) {
-            if (err) throw err;
-            console.log(result);
-            // console.log(result[0].id);
-        });
-        con.end();
-    });
-}
+/* Test function */
+// var select = function () {
+//     con.connect(function (err) {
+//         if (err) throw err;
+//         console.log("Connected!");
+//         var sql_query = "SELECT * FROM light";
+//         con.query(sql_query, function (err, result) {
+//             if (err) throw err;
+//             console.log(result);
+//             // console.log(result[0].id);
+//         });
+//         con.end();
+//     });
+// }
 
 module.exports = {
     login,
