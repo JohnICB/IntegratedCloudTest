@@ -242,22 +242,3 @@ module.exports = {
     deleteDevice,
     getDevices
 }
-
-
-// CREATE TABLE `switch` (
-//     `id` int(11) NOT NULL AUTO_INCREMENT,
-//     `name` varchar(32) DEFAULT NULL,
-//     `location` varchar(64) DEFAULT NULL,
-//     `power` varchar(5) DEFAULT "off",
-//     `uid` int(11) NOT NULL,
-//     PRIMARY KEY (`id`)
-//   );
-
-//   CREATE TABLE `light` (
-//     `id` int(11) NOT NULL AUTO_INCREMENT,
-//     `name` varchar(32) DEFAULT NULL,
-//     `location` varchar(64) DEFAULT NULL,
-//     `brightness` int(5) DEFAULT 0,
-//     `uid` int(11) NOT NULL,
-//     PRIMARY KEY (`id`)
-//   );
