@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>MiOS Gadget Manager | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  <!-- End CSS -->
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-sm nav-bg">
+      <div class="container-fluid">
+        <h1 id="title">MiOS GestiON</h1>
+      </div>
+    </nav>
+  </header>
+
+  <!-- <a id="add" class="btn btn-primary btn-width">ADD</a> -->
+  <div class="center">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-modal">
+      Add Device
+    </button>
+    <button id="delete-user" type="button" class="btn btn-danger">
+      Delete user
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="AddDevice" aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="AddDevice">Add device</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="device-form">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="light-input" name="type" value="light" checked="checked"
+                  required />
+                <label class="custom-control-label" for="light-input">Light</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="switch-input" name="type" value="switch" required />
+                <label class="custom-control-label" for="switch-input">Switch</label>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+                </div>
+                <input name="name" type="text" class="form-control" placeholder="ex. Vera 1.0" required />
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Location</span>
+                </div>
+                <input name="location" type="text" class="form-control" placeholder="ex. Kitchen" required />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" id="add" class="btn btn-primary">
+              Add
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <section class="row">
+      <div class="mx-auto sticky-top">
+        <a href="#" id="add" class="btn btn-primary btn-width">ADD</a>
+      </div>
+    </section> -->
+
+  <div class="container-fluid">
+    <div id="items-cntr" class="row center-content text-center">
+      <!-- <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="card">
+          <a href="#" class="btn btn-secondary a-btn-slide-text edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <span><strong>Edit</strong></span>
+          </a>
+          <img class="card-img-top add-image" src="/images/bec.png" alt="Card image" style="width: 50px" />
+          <div class="card-body">
+            <h4 class="card-title">Bec</h4>
+            <p class="card-text">Bucatarie</p>
+            <span class="badge badge-success status">On</span>
+            <a href="#" class="btn btn-primary btn-width">Switch On</a>
+            <a href="#" class="btn btn-danger btn-width">x Remove</a>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <!-- load JS after page is done downloading -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <script src="js/main.js"></script>
+  <!-- end JS -->
+</body>
+
+</html>

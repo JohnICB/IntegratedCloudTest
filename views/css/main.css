@@ -1,0 +1,76 @@
+/* globals */
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+}
+
+/* header */
+#title {
+    margin: auto;
+    color: #F2B134;
+}
+
+.nav-bg {
+    background-color: rgb(17, 47, 65);
+}
+
+/* end header */
+
+.center-content {
+    margin: auto;
+    /* background-color: #ccc; */
+}
+
+.badge.status {
+    display: block;
+    width: 4em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.card {
+    background-color: #ccc;
+    margin-bottom: 20px;
+}
+
+.card-img-top.device-image {
+    width: 70px;
+    margin: auto;
+}
+
+.btn.btn-width {
+    width: 5.5em;
+    padding: 4px;
+}
+
+.btn:not(:disabled):not(.disabled) {
+    color: white;
+}
+
+.btn.btn-primary.btn-width {
+    margin-right: 10px
+}
+
+.edit {
+    color: white;
+}
+
+.btn.btn-secondary.a-btn-slide-text.edit {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+.center {
+    text-align: center;
+    z-index: 12;
+    /* border: 3px solid green; */
+}
