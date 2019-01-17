@@ -24,34 +24,26 @@ var getDevices = function (type, uid, res = -1, second = false, lights = undefin
                     id: result[i].id,
                     name: result[i].name,
                     location: result[i].location,
+                    power: result[i].power,
                     type: type
                 }
                 if (type === "light") {
                     device.brightness = result[i].brightness;
-                } else if (type === "switch") {
-                    device.power = result[i].power;
                 }
                 devices.push(device);
             }
 
             if (second == false) {
-                // console.log(devices, "devices");
                 getDevices("switch", uid, res, true, devices);
             }
             if (second == true) {
-                // console.log("Lights are: ", lights);
-                // console.log("Switches are: ", devices);
-                // console.log("Joined are: ", devices.concat(lights));
                 var joined = devices.concat(lights);
-                // console.log(devices);
                 res.send(JSON.stringify({
                     devices: joined
                 }));
             }
         });
     });
-    // console.log("RETURNING DEVICES: " + JSON.stringify(devices));
-    return devices;
 }
 
 /* Checks if username exists, returns as an object an array of all 
@@ -63,7 +55,6 @@ var login = function (data, res) {
         var sql_query = "SELECT * FROM USER WHERE name=" + con.escape(data.name);
         con.query(sql_query, function (err, result) {
             if (err) throw err;
-
             if (result.length == 0) {
                 ans.answer = "not found";
                 res.send(JSON.stringify(ans));
@@ -147,11 +138,12 @@ var updateDeviceState = function (data, res) {
     var sql;
     console.log(data);
     if (data.type === "light") {
-        if (data.brightness > 100 || data.brightness < 0) {
-            ///TODO: flag error
-            data.brightness = 0;
+        if (data.brightness >= 0) {
+            sql = "UPDATE light SET brightness = " + (data.brightness) + " WHERE id=" + (data.id);
+        } else {
+            sql = "UPDATE light SET power = " + con.escape(data.power) + " WHERE id=" + (data.id);
         }
-        sql = "UPDATE light SET brightness = " + (data.brightness) + " WHERE id=" + (data.id);
+
     } else if (data.type === "switch") {
         sql = "UPDATE switch SET power = " + con.escape(data.power) + " WHERE id=" + (data.id);
     }

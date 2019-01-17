@@ -7,6 +7,9 @@ Create a nodejs server to create an API for a basic device management system.
 3.  create a database and it's tables (shown below)
 4.  open cmd and execute: cd app
 5.  and then: node app.js
+6.  open your browser and go to `127.0.0.1:8082/login`
+
+You may need to edit the createConnection parameters in app/database.js to suit your settings(top of the file)
 
 # MySQL
 
@@ -25,6 +28,7 @@ Create a nodejs server to create an API for a basic device management system.
     `name` varchar(32) DEFAULT NULL,
     `location` varchar(64) DEFAULT NULL,
     `brightness` int(5) DEFAULT 0,
+    `power` varchar(5) DEFAULT "off",
     `uid` int(11) NOT NULL,
     PRIMARY KEY (`id`)
     );

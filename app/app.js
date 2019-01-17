@@ -14,7 +14,7 @@ var db = require('./database');
 
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
-    console.log(req.cookies);
+    // console.log(req.cookies);
     // if (req.cookies.uid < 0) {
     //     res.redirect('http://127.0.0.1:8082/login');
     // }

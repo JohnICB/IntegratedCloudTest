@@ -36,14 +36,28 @@ body {
     margin-bottom: 10px;
 }
 
+/* .badge.status:nth-of-type(2) {
+    display: inline-block;
+    position: relative;
+    top: -37px;
+    right: -90px;
+
+} */
+
 .card {
-    background-color: #ccc;
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.7);
     margin-bottom: 20px;
 }
 
 .card-img-top.device-image {
+    height: 130px;
     width: 70px;
     margin: auto;
+}
+
+.downpad {
+    margin-top: 30px !important;
 }
 
 .btn.btn-width {
@@ -55,8 +69,9 @@ body {
     color: white;
 }
 
-.btn.btn-primary.btn-width {
-    margin-right: 10px
+.btn.btn-width {
+    margin-right: 10px;
+    margin-bottom: 3px;
 }
 
 .edit {
@@ -72,5 +87,6 @@ body {
 .center {
     text-align: center;
     z-index: 12;
+    margin-bottom: 20px;
     /* border: 3px solid green; */
 }

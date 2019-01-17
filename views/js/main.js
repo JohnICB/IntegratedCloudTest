@@ -37,7 +37,24 @@ var newDevice = function (data) {
     .attr("type", data.type)
     .attr("id", "remove");
 
+  var onOffbtn = $("<a></a>")
+    .addClass("btn btn-info  btn-width")
+    .text("x Remove")
+    .attr("item", data.id)
+    .attr("type", data.type)
+    .attr("id", "onoff");
+
+  var onoffbadge = $("<span></span>");
   if (data.type === "light") {
+
+    if (data.power == "off") {
+      onOffbtn.text("Switch On");
+      onoffbadge.text("Off").addClass("badge badge-danger status");
+    } else {
+      onOffbtn.text("Switch Off");
+      onoffbadge.text("On").addClass("badge badge-success status");
+    }
+
     if (data.brightness == 0 || data.brightness == undefined) {
       switchBtn.text("Brightness");
       status.text("0").addClass("badge badge-danger status");
@@ -45,6 +62,7 @@ var newDevice = function (data) {
       switchBtn.text("Brightness");
       status.text(data.brightness).addClass("badge badge-success status");
     }
+
   } else {
     if (data.power == "off") {
       switchBtn.text("Switch On");
@@ -54,7 +72,15 @@ var newDevice = function (data) {
       status.text("On").addClass("badge badge-success status");
     }
   }
-  cardBody.append(cardTitle, cardText, status, switchBtn, removeBtn);
+
+  cardBody.append(cardTitle, cardText, status);
+  if (data.type === "light") {
+    cardBody.append(onoffbadge, onOffbtn);
+  } else {
+    switchBtn.addClass("downpad");
+    removeBtn.addClass("downpad");
+  }
+  cardBody.append(switchBtn, removeBtn);
   // editBtn.append(spn1, spnEdit);
   cardDiv.append( /*editBtn ,*/ img, cardBody);
   bigDiv.append(cardDiv);
@@ -68,9 +94,8 @@ var removeDeviceHTML = function (buttonElm) {
     .parent();
   div.remove();
 };
-
 var switchDevice = function (buttonElm, val = 0) {
-  var badge = buttonElm.prev();
+  var badge = buttonElm.prev().prev().prev();
   if (buttonElm.attr("type") === "light") {
     badge
       .text(val)
@@ -82,21 +107,26 @@ var switchDevice = function (buttonElm, val = 0) {
       badge.addClass("badge-danger");
     }
   } else
-  if (badge.text() == "On") {
-    badge
-      .text("Off")
-      .addClass("badge-danger")
-      .removeClass("badge-success");
-    buttonElm.text("Switch On");
-  } else {
-    badge
-      .text("On")
-      .addClass("badge-success")
-      .removeClass("badge-danger");
-    buttonElm.text("Switch Off");
-  }
-};
 
+  {
+    badge = badge.next().next();
+    if (badge.text() == "On") {
+
+      badge
+        .text("Off")
+        .addClass("badge-danger")
+        .removeClass("badge-success");
+      buttonElm.text("Switch On");
+    } else {
+      badge
+        .text("On")
+        .addClass("badge-success")
+        .removeClass("badge-danger");
+      buttonElm.text("Switch Off");
+    }
+  }
+
+};
 var getDevices = function () {
   if ($.cookie("uid")) {
     $.ajax({
@@ -118,7 +148,6 @@ var getDevices = function () {
     });
   }
 }
-
 var resetForm = function () {
   $("#light-input").prop('checked', true);
   $('#switch-input').prop('checked', false);
@@ -126,7 +155,22 @@ var resetForm = function () {
   $('input[name="location"]').val('');
 
 }
-
+var lightonoff = function (elem) {
+  badge = elem.prev();
+  if (badge.text() == "On") {
+    badge
+      .text("Off")
+      .addClass("badge-danger")
+      .removeClass("badge-success");
+    elem.text("Switch On");
+  } else {
+    badge
+      .text("On")
+      .addClass("badge-success")
+      .removeClass("badge-danger");
+    elem.text("Switch Off");
+  }
+}
 $(document).ready(function () {
   // alert($.cookie("uid"));
   // console.log($.cookie("uid"));
@@ -231,7 +275,7 @@ $(document).ready(function () {
       }
       info.brightness = brg;
     } else {
-      if (element.prev().text() == "Off") {
+      if (element.prev().prev().prev().text() == "Off") {
         pwr = "on";
       }
       info.power = pwr;
@@ -282,4 +326,41 @@ $(document).ready(function () {
       }
     });
   })
+
+  $("#items-cntr").on("click", "#onoff", function () {
+    var pwr = "off";
+    var element = $(this);
+    info = {
+      type: element.attr("type")
+    };
+    if (element.prev().text() == "Off") {
+      pwr = "on";
+    }
+    info.power = pwr;
+    info.brightness = -1;
+    info.id = element.attr("item");
+
+
+    // alert(element.text() + element.attr("item"));
+    //do request here
+    $.ajax({
+      type: "PATCH",
+      url: "http://127.0.0.1:8082/api/update_device",
+      // The key needs to match your method's input parameter (case-sensitive).
+      data: JSON.stringify(info),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (data) {
+        if (data.answer === "ok") {
+          lightonoff(element);
+        }
+      },
+      failure: function (errMsg) {
+        alert(errMsg);
+      }
+    });
+    //remove from html if success
+
+  });
+
 });
